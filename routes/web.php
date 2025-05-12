@@ -5,10 +5,6 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -16,6 +12,7 @@ Route::middleware([
     'ensure-user-active',
     'ensure-user-vendor'
 ])->group(function () {
+    Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     //Order routes
     Route::get('/orders', [OrderController::class, 'index'])->name('orders')->middleware('can:browse-orders');
